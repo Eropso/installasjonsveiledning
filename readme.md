@@ -1,7 +1,7 @@
 # Installasjonsveiledning
 
 ## Introduksjon
-Denne veiledningen skal inneholde hvordan man tilbakestiller Raspberry pi og starter den opp igjen, laster ned ssh og kobler det med egen pc og setter opp mariadb.
+Denne veiledningen skal inneholde hvordan man tilbakestiller Raspberry pi og starter den opp igjen, laster ned ssh og kobler det med egen pc, setter opp mariadb og sette opp telefonkatalogen.
  
 ## Innhold
 1. [Introduksjon](#introduksjon)
@@ -10,6 +10,7 @@ Denne veiledningen skal inneholde hvordan man tilbakestiller Raspberry pi og sta
 4. [SSH](#ssh)
 5. [MariaDB](#mariadb)
 6. [Statisk IP-Adresse](#statisk-ip-adresse)
+7. [Telefonkatalog](#telefonkatalog)
  
 
  
@@ -166,3 +167,64 @@ sudo nmtui
 
 8. Press ok
 
+## Telefonkatalog
+
+```
+mkdir kode
+```
+Lager en mappe som heter kode
+
+
+```
+cd kode
+```
+Går inn i mappen
+
+Finn github lenken og kopier den
+https://github.com/Eropso/installasjonsveiledning
+
+```
+git clone https://github.com/Eropso/installasjonsveiledning
+```
+Kloner innholdet i github repo
+
+Logg inn i MariaDB og skriv/lim inn koden fra de fire første sql-filene
+
+```
+CREATE DATABASE telefonkatalog;
+```
+
+```
+USE telefonkatalog;
+
+CREATE TABLE person (
+    id int NOT NULL AUTO_INCREMENT,
+    fornavn VARCHAR(255) NOT NULL,
+    etternavn VARCHAR(255) NOT NULL,
+    telefonnummer CHAR(8),
+    PRIMARY KEY (id)
+);
+```
+
+```
+INSERT INTO person (fornavn, etternavn, telefonnummer)
+VALUES ('Erik', 'Perik', '12345678');
+INSERT INTO person (fornavn, etternavn, telefonnummer)
+VALUES ('Lise', 'Pise', '22334455');
+INSERT INTO person (fornavn, etternavn, telefonnummer)
+VALUES ('Testus', 'Jensen', '11114444');
+INSERT INTO person (fornavn, etternavn, telefonnummer)
+VALUES ('Knut', 'Donald', '31415926');
+```
+
+
+```
+SELECT * FROM person;
+SELECT fornavn, telefonnummer FROM person;
+SELECT * FROM person WHERE fornavn = "Erik";
+SELECT telefonnummer FROM person WHERE fornavn = "Lise" AND etternavn = "Pise";
+```
+
+I GitHub-repositoriet finner du en mappe for Python. Last ned filen som heter telefonkatalog_oppdater_sql.py og lagre den på laptopen din (ikke på Raspberry Pi-en).
+
+Oppdater deretter IP-adressen til Pi-en din (bruk kommandoen ip a i terminalen for å finne den). Endre brukernavn og passord til databasebrukeren du opprettet tidligere i avsnittet om databasen (der du brukte CREATE USER og lignende).
