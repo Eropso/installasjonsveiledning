@@ -225,6 +225,26 @@ SELECT * FROM person WHERE fornavn = "Erik";
 SELECT telefonnummer FROM person WHERE fornavn = "Lise" AND etternavn = "Pise";
 ```
 
-I GitHub-repositoriet finner du en mappe for Python. Last ned filen som heter telefonkatalog_oppdater_sql.py og lagre den på laptopen din (ikke på Raspberry Pi-en).
+I GitHub-repositoriet ligger det en mappe for Python. Last ned telefonkatalog_oppdater_sql.py og lagre den på laptopen din (ikke Raspberry Pi).
 
-Oppdater deretter IP-adressen til Pi-en din (bruk kommandoen ip a i terminalen for å finne den). Endre brukernavn og passord til databasebrukeren du opprettet tidligere i avsnittet om databasen (der du brukte CREATE USER og lignende).
+
+```
+import mysql.connector # pip install mysql-connector-python
+
+mydb = mysql.connector.connect(
+host="ip_adressen_til_PI",
+user="username",
+password="password",
+database="telefonkatalog")
+
+cursor = mydb.cursor()
+cursor.execute("SELECT * FROM person")
+resultater = cursor.fetchall()
+
+for dings in resultater:
+    print(dings)
+```
+
+Endre IP-adresse, username og passord til din.
+
+Kjør python koden på laptopen din.
