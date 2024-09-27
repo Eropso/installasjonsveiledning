@@ -227,9 +227,15 @@ SELECT telefonnummer FROM person WHERE fornavn = "Lise" AND etternavn = "Pise";
 
 I GitHub-repositoriet ligger det en mappe for Python. Last ned telefonkatalog_oppdater_sql.py og lagre den på laptopen din (ikke Raspberry Pi).
 
+Installer mysql-connector-python
+
 
 ```
-import mysql.connector # pip install mysql-connector-python
+pip install mysql-connector-python
+```
+
+```
+import mysql.connector
 
 mydb = mysql.connector.connect(
 host="ip_adressen_til_PI",
